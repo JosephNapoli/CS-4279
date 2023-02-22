@@ -4,11 +4,7 @@ import "./profile.css";
 
 export default function Profile({ user }) {
     return (
-        <Row>
-            <Col sm={2}>
-                <div className={"profilepage"}>
-                </div>
-            </Col>
+        <Row className="p-5">
             <Col sm={8}>
                 <h1>Player Profile</h1>
                 <Row>

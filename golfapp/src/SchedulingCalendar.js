@@ -56,7 +56,7 @@ export default class Demo extends React.PureComponent {
         const { currentDate, data } = this.state;
 
         return (
-            <Paper>
+            <Paper className="p-5">
                 <NavigationBar/>
                 <Scheduler
                     data={data}

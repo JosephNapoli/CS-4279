@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
         <NavigationBar/>
-        <Container fluid>
+        <Container fluid className="p-3">
             <PathRoutes/>
         </Container>
     </div>
