@@ -29,10 +29,10 @@ export default function Profile({ user }) {
                 </Row>
                 <Row>
                     <Col sm={2}>
-                        <h6>User Type:</h6>
+                        <h6>Home Course:</h6>
                     </Col>
                     <Col>
-                        <p>Player</p>
+                        <p>McCabe Golf Course</p>
                     </Col>
                 </Row>
                 <Row>
@@ -84,3 +84,4 @@ export default function Profile({ user }) {
         </Row>
     );
 }
+
