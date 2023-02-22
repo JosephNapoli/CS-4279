@@ -88,9 +88,6 @@ export default function Scoring({ user }) {
                                     <Form.Label>Golfer 2</Form.Label>
                                     <Form.Control type="number" placeholder="Enter score" />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
-                                    Submit
-                                </Button>
                             </Form>
                         </Modal.Body>
                         <Modal.Footer>
