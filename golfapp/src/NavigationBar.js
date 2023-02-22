@@ -4,7 +4,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 //need to add as={NavLink} to the NavItems and add field to href
 export default function NavigationBar() {
     return (
-        <Navbar bg="success" variant="dark" expand="lg">
+        <Navbar fixed="top" bg="success" variant="dark" expand="lg">
             <Container>
                 <Navbar.Brand href="/home">Swingers Club</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
