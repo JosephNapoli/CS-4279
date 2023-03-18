@@ -11,6 +11,19 @@ export default function Scoring({ user }) {
     const openHoleModal = () => setHoleModal(true);
     const closeHoleModal = () => setHoleModal(false);
 
+    const [player1score, setPlayer1Score] = useState([0,0,0,0,0,0,0,0,0]);
+    const [player2score, setPlayer2Score] = useState([0,0,0,0,0,0,0,0,0]);
+
+    const submitScore = (hole, p1, p2) => {
+        const p1Score = [...player1score];
+        p1Score[hole-1] = p1;
+        setPlayer1Score(p1Score);
+        const p2Score = [...player2score];
+        p2Score[hole-1] = p2;
+        setPlayer2Score(p2Score);
+        //change leader in here
+    }
+
     return (
         <Container fluid>
             <Row>
@@ -36,27 +49,16 @@ export default function Scoring({ user }) {
                         <tbody>
                         <tr>
                             <td>Sam Feifer</td>
-                            <th>5</th>
-                            <th>4</th>
-                            <th>3</th>
+                            {player1score.map((score) =>
+                                <th>{score !== 0 ? score : ""}</th>
+                            )}
                             <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>+1</th>
                         </tr>
                         <tr>
                             <td>Joe Napoli</td>
-                            <th>4</th>
-                            <th>6</th>
-                            <th>4</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            {player2score.map((score) =>
+                                <th>{score !== 0 ? score : ""}</th>
+                            )}
                             <th></th>
                         </tr>
                         </tbody>
@@ -74,31 +76,7 @@ export default function Scoring({ user }) {
                     >
                         Score Hole
                     </Button>
-                    <Modal show={showHoleModal} onHide={closeHoleModal}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Score Hole</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form>
-                                <Form.Group className="mb-3" controlId="golfer1score">
-                                    <Form.Label>Golfer 1</Form.Label>
-                                    <Form.Control type="number" placeholder="Enter score" />
-                                </Form.Group>
-                                <Form.Group className="mb-3" controlId="golfer2score">
-                                    <Form.Label>Golfer 2</Form.Label>
-                                    <Form.Control type="number" placeholder="Enter score" />
-                                </Form.Group>
-                            </Form>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={closeHoleModal}>
-                                Cancel
-                            </Button>
-                            <Button variant="primary" onClick={closeHoleModal}>
-                                Submit Scores
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
+                    <ScoreHoleModal show={showHoleModal} onHide={closeHoleModal} onSubmit={submitScore} />
                     <Button
                         className="m-1"
                         variant="outline-success"
@@ -131,4 +109,52 @@ export default function Scoring({ user }) {
             </Row>
         </Container>
     );
+}
+
+const ScoreHoleModal = ({show, onHide, onSubmit}) => {
+    const [holeNumber, setHoleNumber] = useState("");
+    const [player1Score, setPlayer1Score] = useState("");
+    const [player2Score, setPlayer2Score] = useState("");
+
+    const submitScores = () => {
+        if(holeNumber > 0 && holeNumber < 10) {
+            onSubmit(holeNumber, player1Score, player2Score);
+        }
+        setHoleNumber("");
+        setPlayer1Score("");
+        setPlayer2Score("");
+        onHide();
+    }
+
+    return (
+        <Modal show={show} onHide={onHide}>
+            <Modal.Header closeButton>
+                <Modal.Title>Score Hole</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group className="mb-3" controlId="holenumber">
+                        <Form.Label>Hole Number</Form.Label>
+                        <Form.Control type="number" placeholder="Enter hole" value={holeNumber} onChange={(e) => setHoleNumber(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="golfer1score">
+                        <Form.Label>Golfer 1</Form.Label>
+                        <Form.Control type="number" placeholder="Enter score" value={player1Score} onChange={(e) => setPlayer1Score(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="golfer2score">
+                        <Form.Label>Golfer 2</Form.Label>
+                        <Form.Control type="number" placeholder="Enter score" value={player2Score} onChange={(e) => setPlayer2Score(e.target.value)} />
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={onHide}>
+                    Cancel
+                </Button>
+                <Button variant="primary" onClick={submitScores}>
+                    Submit Scores
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
