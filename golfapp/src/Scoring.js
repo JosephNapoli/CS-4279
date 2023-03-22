@@ -14,6 +14,9 @@ export default function Scoring({ user }) {
     const [player1score, setPlayer1Score] = useState([0,0,0,0,0,0,0,0,0]);
     const [player2score, setPlayer2Score] = useState([0,0,0,0,0,0,0,0,0]);
 
+    const [player1wins, setPlayer1Wins] = useState(0);
+    const [player2wins, setPlayer2Wins] = useState(0);
+
     const submitScore = (hole, p1, p2) => {
         const p1Score = [...player1score];
         p1Score[hole-1] = p1;
@@ -21,7 +24,15 @@ export default function Scoring({ user }) {
         const p2Score = [...player2score];
         p2Score[hole-1] = p2;
         setPlayer2Score(p2Score);
-        //change leader in here
+
+        if (p1 < p2) {
+            const p1Wins = player1wins + 1;
+            setPlayer1Wins(p1Wins);
+        }
+        if (p2 < p1) {
+            const p2Wins = player2wins + 1;
+            setPlayer2Wins(p2Wins);
+        }
     }
 
     return (
@@ -52,14 +63,14 @@ export default function Scoring({ user }) {
                             {player1score.map((score) =>
                                 <th>{score !== 0 ? score : ""}</th>
                             )}
-                            <th></th>
+                            <th>{player1wins}</th>
                         </tr>
                         <tr>
                             <td>Joe Napoli</td>
                             {player2score.map((score) =>
                                 <th>{score !== 0 ? score : ""}</th>
                             )}
-                            <th></th>
+                            <th>{player2wins}</th>
                         </tr>
                         </tbody>
                     </Table>
