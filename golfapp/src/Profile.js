@@ -1,59 +1,50 @@
 import React, {useState} from "react";
-import {Col, Row, Table} from "react-bootstrap";
+import {Button, Col, Form, Modal, Row, Table} from "react-bootstrap";
 import "./profile.css";
-import {Link} from "react-router-dom";
+import defaultPic from './images/Default_pfp.png'
 
-
-const UserContext = React.createContext({
-    name : "",
-    email: "",
-    homeCourse: "",
-
-    setName: () => {},
-    setEmail: () => {},
-    setHomeCourse: () => {},
-})
-
-
-function EditButton(){
-    return (
-        <Link to = "/editprofile">
-            <button> Edit Your Profile</button>
-        </Link>
-     )
-}
-function ProfilePictureUpload(){
-    const [picture, setPicture] = useState(null)
-
-    const handleInput = (event) => {
-        setPicture(event.target.files[0])
-    }
-
-    const handleClick = () => {
-        console.log("Selected picture: ", picture)
-    }
-
-    return (
-        <div>
-            <input type = "file" onChange={handleInput}/>
-            <button onClick={handleClick}> Upload a profile picture! </button>
-        </div>
-    )
-}
 export default function Profile({ user }) {
+    const [showEditModal, setEditModal] = useState(false);
+    const openEditModal = () => setEditModal(true);
+    const closeEditModal = () => setEditModal(false);
+
+    const [name, setName] = useState("John Doe")
+    const [email, setEmail] = useState("JohnDoe@gmail.com")
+    const [course, setCourse] = useState("Augusta National")
+
+    const saveValues = (name, email, course) => {
+        setName(name)
+        setEmail(email)
+        setCourse(course)
+    }
+
     return (
         <Row className="p-5">
             <Col sm={8}>
                 <h1>Player Profile</h1>
                 <Row>
-                    <EditButton/>
+                    <Col md={3}>
+                        <img className = "profile" src = {defaultPic} width="150" height="150"/>
+                    </Col>
+                    <Col>
+                        <Button //FIX STYLING FOR THIS BUTTON
+                            className="m-1"
+                            variant="outline-success"
+                            onClick={openEditModal}
+                        >
+                            Edit Profile
+                        </Button>
+                        <EditModal show={showEditModal} onHide={closeEditModal} onSubmit={saveValues} currName={name}
+                                   currEmail={email}  currCourse= {course}/>
+
+                    </Col>
                 </Row>
                 <Row>
                     <Col sm={2}>
                         <h6>Name:</h6>
                     </Col>
                     <Col>
-                        <p>Sam Feifer</p>
+                        <p>{name}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -61,7 +52,7 @@ export default function Profile({ user }) {
                         <h6>Email:</h6>
                     </Col>
                     <Col>
-                        <p>samuel.j.feifer@vanderbilt.edu</p>
+                        <p>{email}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -69,7 +60,7 @@ export default function Profile({ user }) {
                         <h6>Home Course:</h6>
                     </Col>
                     <Col>
-                        <p>McCabe Golf Course</p>
+                        <p>{course}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -120,5 +111,51 @@ export default function Profile({ user }) {
             <Col sm={2} />
         </Row>
     );
+}
+
+const EditModal = ({show, onHide, onSubmit, currName, currEmail, currCourse}) => {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [course, setCourse] = useState("")
+
+    const saveData = () => {
+        onSubmit(name, email, course)
+        onHide()
+    }
+
+    return (
+        <Modal show={show} onHide={onHide}>
+            <Modal.Header closeButton>
+                <Modal.Title>Edit Your Profile</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group >
+                        <Form.Label>Name</Form.Label>
+
+                        {/* FIX STYLING FOR THESE THREE INPUT COMPONENTS*/}
+
+                        <input className="userIn"   type = "text" defaultValue={currName} onChange={(e) => setName(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Email</Form.Label>
+                        <input className="userIn"   type = "text" defaultValue={currEmail} onChange={(e) => setEmail(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                       <Form.Label>Favorite Course</Form.Label>
+                        <input className="userIn"   type = "text" defaultValue={currCourse} onChange={(e) => setCourse(e.target.value)}/>
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={onHide}>
+                    Cancel
+                </Button>
+                <Button variant="primary" onClick={saveData}>
+                    Save New Profile
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
 

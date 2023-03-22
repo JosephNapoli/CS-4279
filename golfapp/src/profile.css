@@ -1,3 +1,6 @@
 .profilepage {
     background-image: url("/public/profile.jpeg");
 }
+.userIn {
+    align-content: space-around;
+}

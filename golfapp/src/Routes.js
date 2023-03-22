@@ -3,7 +3,6 @@ import Home from "./Home";
 import Scoring from "./Scoring";
 import Profile from "./Profile";
 import Scheduling from "./Scheduling";
-import EditProfile from "./EditProfile";
 
 export default function PathRoutes( { currUser }) {
     return (
@@ -12,7 +11,6 @@ export default function PathRoutes( { currUser }) {
             <Route path ="/home" element={<Home user={currUser} />} />
             <Route path="/scoring" element={<Scoring/>} />
             <Route path="/profile" element={<Profile/>} />
-            <Route path="/editprofile" element = {<EditProfile/>} />
             <Route path="/scheduling" element={<Scheduling/>} />
         </Routes>
     );
