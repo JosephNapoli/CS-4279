@@ -11,6 +11,8 @@ export default function Profile({ user }) {
     const [name, setName] = useState("John Doe")
     const [email, setEmail] = useState("JohnDoe@gmail.com")
     const [course, setCourse] = useState("Augusta National")
+    const [profilePicture, setProfilePicture] = useState(defaultPic)
+    const [profilePictureURL, setProfilePictureURL] = useState(defaultPic)
 
     const saveValues = (name, email, course) => {
         setName(name)
@@ -18,24 +20,40 @@ export default function Profile({ user }) {
         setCourse(course)
     }
 
+    function HandleProfileChange(event){
+        const reader = new FileReader()
+        reader.onload = (event) => {
+            const dataUrl = event.target.result
+        }
+        reader.readAsDataURL(profilePicture)
+        setProfilePicture(event.target.files[0])
+    }
+
+    function handleProfileUpload(){
+        const reader = new FileReader()
+        reader.onload = (event) => {
+            setProfilePictureURL(event.target.result)
+        }
+        reader.readAsDataURL(profilePicture)
+    }
+
     return (
         <Row className="p-5">
             <Col sm={8}>
                 <h1>Player Profile</h1>
                 <Row>
-                    <Col md={3}>
-                        <img className = "profile" src = {defaultPic} width="150" height="150"/>
+                    <Col md = {3}>
+                        <img className = "profile-picture" src = {profilePicture} width="150" height="150"/>
                     </Col>
-                    <Col>
-                        <Button //FIX STYLING FOR THIS BUTTON
-                            className="m-1"
-                            variant="outline-success"
-                            onClick={openEditModal}
-                        >
-                            Edit Profile
-                        </Button>
-                        <EditModal show={showEditModal} onHide={closeEditModal} onSubmit={saveValues} currName={name}
-                                   currEmail={email}  currCourse= {course}/>
+                    <Col md={4}>
+                        <br/> <br/>
+                        <Row>
+                            <h6> Change Your Profile Picture: </h6>
+                        </Row>
+                        <Row>
+                            <input type = "file" accept = "image/*" onChange = {HandleProfileChange} style={{cursor: "pointer"}}/>
+                            {/*<Button onClick={handleProfileUpload}> Upload </Button>*/}
+                        </Row>
 
                     </Col>
                 </Row>
@@ -85,6 +103,19 @@ export default function Profile({ user }) {
                     </Col>
                     <Col>
                         <p>100%</p>
+                    </Col>
+                </Row>
+                <Row >
+                    <Col sm = {2}>
+                        <Button // TODO: FIX STYLING FOR THIS BUTTON
+                            className="m-1"
+                            variant="outline-success"
+                            onClick={openEditModal}
+                        >
+                            Edit Profile
+                        </Button>
+                        <EditModal show={showEditModal} onHide={closeEditModal} onSubmit={saveValues} currName={name}
+                                   currEmail={email}  currCourse= {course}/>
                     </Col>
                 </Row>
                 <br />
