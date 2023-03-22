@@ -54,7 +54,7 @@ export default function Scoring({ user }) {
                             <th>7</th>
                             <th>8</th>
                             <th>9</th>
-                            <th>Leader</th>
+                            <th>Holes Won</th>
                         </tr>
                         </thead>
                         <tbody>
