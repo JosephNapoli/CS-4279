@@ -8,7 +8,7 @@ export default function PathRoutes( { currUser }) {
     return (
         <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
-            <Route path ="/home" element={<Home user={currUser} />} />
+            <Route path ="/home" element={<Home/>} />
             <Route path="/scoring" element={<Scoring/>} />
             <Route path="/profile" element={<Profile/>} />
             <Route path="/scheduling" element={<Scheduling/>} />
