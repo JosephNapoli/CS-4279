@@ -8,6 +8,8 @@ export default function Profile({ user }) {
     const openEditModal = () => setEditModal(true);
     const closeEditModal = () => setEditModal(false);
 
+    const currName = "John Doe"
+
     const [name, setName] = useState("John Doe")
     const [email, setEmail] = useState("JohnDoe@gmail.com")
     const [course, setCourse] = useState("Augusta National")
@@ -20,21 +22,9 @@ export default function Profile({ user }) {
         setCourse(course)
     }
 
-    function HandleProfileChange(event){
-        const reader = new FileReader()
-        reader.onload = (event) => {
-            const dataUrl = event.target.result
-        }
-        reader.readAsDataURL(profilePicture)
-        setProfilePicture(event.target.files[0])
-    }
-
-    function handleProfileUpload(){
-        const reader = new FileReader()
-        reader.onload = (event) => {
-            setProfilePictureURL(event.target.result)
-        }
-        reader.readAsDataURL(profilePicture)
+    const handleProfileChange = (event) => {
+        const newPicture = URL.createObjectURL(event.target.files[0])
+        setProfilePicture(newPicture)
     }
 
     return (
@@ -51,7 +41,7 @@ export default function Profile({ user }) {
                             <h6> Change Your Profile Picture: </h6>
                         </Row>
                         <Row>
-                            <input type = "file" accept = "image/*" onChange = {HandleProfileChange} style={{cursor: "pointer"}}/>
+                            <input type = "file" accept = "image/*" onChange = {handleProfileChange} style={{cursor: "pointer"}}/>
                             {/*<Button onClick={handleProfileUpload}> Upload </Button>*/}
                         </Row>
 
@@ -119,7 +109,7 @@ export default function Profile({ user }) {
                     </Col>
                 </Row>
                 <br />
-                <h4>Sam's games</h4>
+                <h4>{name}'s games</h4>
                 <Table striped bordered hover>
                     <thead>
                     <tr>
@@ -161,19 +151,22 @@ const EditModal = ({show, onHide, onSubmit, currName, currEmail, currCourse}) =>
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Group >
-                        <Form.Label>Name</Form.Label>
-
-                        {/* FIX STYLING FOR THESE THREE INPUT COMPONENTS*/}
-
-                        <input className="userIn"   type = "text" defaultValue={currName} onChange={(e) => setName(e.target.value)}/>
+                    <Form.Group>
+                        {/* FIX STYLING */}
+                        <Form.Label>Name </Form.Label>
+                        <input className="userIn" type="text" defaultValue={currName} onChange={(e) => {
+                            const value = e.target.value;
+                            if (value.trim().length > 0) {
+                                setName(value);
+                            }
+                        }} />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>Email </Form.Label>
                         <input className="userIn"   type = "text" defaultValue={currEmail} onChange={(e) => setEmail(e.target.value)}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                       <Form.Label>Favorite Course</Form.Label>
+                       <Form.Label>Favorite Course </Form.Label>
                         <input className="userIn"   type = "text" defaultValue={currCourse} onChange={(e) => setCourse(e.target.value)}/>
                     </Form.Group>
                 </Form>
