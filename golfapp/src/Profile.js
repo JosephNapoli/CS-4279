@@ -8,13 +8,10 @@ export default function Profile({ user }) {
     const openEditModal = () => setEditModal(true);
     const closeEditModal = () => setEditModal(false);
 
-    const currName = "John Doe"
-
     const [name, setName] = useState("John Doe")
     const [email, setEmail] = useState("JohnDoe@gmail.com")
     const [course, setCourse] = useState("Augusta National")
     const [profilePicture, setProfilePicture] = useState(defaultPic)
-    const [profilePictureURL, setProfilePictureURL] = useState(defaultPic)
 
     const saveValues = (name, email, course) => {
         setName(name)
@@ -42,7 +39,6 @@ export default function Profile({ user }) {
                         </Row>
                         <Row>
                             <input type = "file" accept = "image/*" onChange = {handleProfileChange} style={{cursor: "pointer"}}/>
-                            {/*<Button onClick={handleProfileUpload}> Upload </Button>*/}
                         </Row>
 
                     </Col>
@@ -135,9 +131,9 @@ export default function Profile({ user }) {
 }
 
 const EditModal = ({show, onHide, onSubmit, currName, currEmail, currCourse}) => {
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [course, setCourse] = useState("")
+    const [name, setName] = useState(currName)
+    const [email, setEmail] = useState(currEmail)
+    const [course, setCourse] = useState(currCourse)
 
     const saveData = () => {
         onSubmit(name, email, course)
@@ -152,14 +148,8 @@ const EditModal = ({show, onHide, onSubmit, currName, currEmail, currCourse}) =>
             <Modal.Body>
                 <Form>
                     <Form.Group>
-                        {/* FIX STYLING */}
                         <Form.Label>Name </Form.Label>
-                        <input className="userIn" type="text" defaultValue={currName} onChange={(e) => {
-                            const value = e.target.value;
-                            if (value.trim().length > 0) {
-                                setName(value);
-                            }
-                        }} />
+                        <input className="userIn" type="text" defaultValue={currName} onChange={(e) => setName(e.target.value)}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Email </Form.Label>
