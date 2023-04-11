@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Col, Form, Modal, Row, Table} from "react-bootstrap";
 import "./profile.css";
 import defaultPic from './images/Default_pfp.png'
@@ -12,6 +12,7 @@ export default function Profile({ user }) {
     const [email, setEmail] = useState("JohnDoe@gmail.com")
     const [course, setCourse] = useState("Augusta National")
     const [profilePicture, setProfilePicture] = useState(defaultPic)
+
 
     const saveValues = (name, email, course) => {
         setName(name)
@@ -65,6 +66,7 @@ export default function Profile({ user }) {
                     </Col>
                     <Col>
                         <p>{course}</p>
+                        <GenerateMap course={course}></GenerateMap>
                     </Col>
                 </Row>
                 <Row>
@@ -173,3 +175,35 @@ const EditModal = ({show, onHide, onSubmit, currName, currEmail, currCourse}) =>
     )
 }
 
+const GenerateMap = ({course}) => {
+    const key = process.env.REACT_APP_API_KEY
+    const [validLocation, setValidLocation] = useState(true)
+
+    useEffect(() => {
+        const script = document.createElement("script")
+        script.src = "https://maps.googleapis.com/maps/api/js?key=" + key + "&libraries=places";
+        script.async = true
+        script.defer = true
+        document.head.appendChild(script)
+        script.onload = () => {
+            const geocoder = new window.google.maps.Geocoder()
+            geocoder.geocode({address: course}, (results, status) => {
+                if (status === window.google.maps.GeocoderStatus.OK){
+                    setValidLocation(true)
+                }
+                else{
+                    setValidLocation(false)
+                }
+            })
+        }
+    }, [course])
+    var mapSrc = "https://maps.googleapis.com/maps/api/staticmap?markers=" + course + "&zoom=15&size=400x400&key=" + key
+
+    return(
+        <div>
+            {validLocation ? (
+            <img src ={mapSrc} style={{marginBottom: "15px"}}/>)
+            : null}
+        </div>
+    )
+}
