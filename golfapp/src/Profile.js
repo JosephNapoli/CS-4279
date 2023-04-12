@@ -8,6 +8,10 @@ export default function Profile({ user }) {
     const openEditModal = () => setEditModal(true);
     const closeEditModal = () => setEditModal(false);
 
+    const [showDeleteUserModal, setDeleteUserModal] = useState(false);
+    const closeDeleteModal = () => setDeleteUserModal(false);
+    const openDeleteModal = () => setDeleteUserModal(true);
+
     const [name, setName] = useState("John Doe")
     const [email, setEmail] = useState("JohnDoe@gmail.com")
     const [course, setCourse] = useState("Augusta National")
@@ -104,6 +108,36 @@ export default function Profile({ user }) {
                         </Button>
                         <EditModal show={showEditModal} onHide={closeEditModal} onSubmit={saveValues} currName={name}
                                    currEmail={email}  currCourse= {course}/>
+                    </Col>
+                    <Col sm = {2}>
+                        <Button
+                            className="m-1"
+                            variant="outline-danger"
+                            onClick={openDeleteModal}
+                        >
+                            Delete User
+                        </Button>
+                        <Modal show={showDeleteUserModal} onHide={closeDeleteModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Delete User</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                Are you sure you want to delete user. This action
+                                cannot be undone.
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={closeDeleteModal}>
+                                    Cancel
+                                </Button>
+                                <Button
+                                    data-testid="confirm-deletion"
+                                    variant="danger"
+                                    //onClick={handleDeleteUser}
+                                >
+                                    Confirm Deletion
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </Col>
                 </Row>
                 <br />
