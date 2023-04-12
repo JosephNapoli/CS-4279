@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-golfapp-staging-211609-authRole",
+      "UnauthRoleArn": "arn:aws:iam::908901207982:role/amplify-golfapp-staging-211609-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::908901207982:role/amplify-golfapp-staging-211609-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-golfapp-staging-211609-deployment",
+      "UnauthRoleName": "amplify-golfapp-staging-211609-unauthRole",
+      "StackName": "amplify-golfapp-staging-211609",
+      "StackId": "arn:aws:cloudformation:us-east-2:908901207982:stack/amplify-golfapp-staging-211609/455a74e0-c69b-11ed-b79a-0a3f3135ccb2",
+      "AmplifyAppId": "dvfbedu6tplu"
+    }
+  }
+}
