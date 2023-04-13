@@ -46,5 +46,5 @@ import React from "react";
 import { render } from "react-dom";
 import SchedulingCalendar from "./SchedulingCalendar";
 export default function scheduling({user}) {
-    render(<SchedulingCalendar/>, document.getElementById("root"));
+    return <SchedulingCalendar/>;
 }

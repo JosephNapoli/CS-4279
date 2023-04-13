@@ -59,7 +59,7 @@ export default function Scoring({ user }) {
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Sam Feifer</td>
+                            <td>John Doe</td>
                             {player1score.map((score) =>
                                 <th>{score !== 0 ? score : ""}</th>
                             )}
