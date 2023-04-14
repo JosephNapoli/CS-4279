@@ -1,7 +1,11 @@
 import "bootstrap/dist/css/bootstrap.css";
 import NavigationBar from "./NavigationBar";
 import {Container} from "react-bootstrap";
+import { API, Auth } from "aws-amplify";
 import PathRoutes from "./Routes";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import '@aws-amplify/ui-react/styles.css';
+
 import Home from "./Home";
 import Scoring from "./Scoring";
 
@@ -16,4 +20,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);

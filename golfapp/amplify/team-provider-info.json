@@ -10,6 +10,11 @@
       "StackName": "amplify-golfapp-staging-211609",
       "StackId": "arn:aws:cloudformation:us-east-2:908901207982:stack/amplify-golfapp-staging-211609/455a74e0-c69b-11ed-b79a-0a3f3135ccb2",
       "AmplifyAppId": "dvfbedu6tplu"
+    },
+    "categories": {
+      "auth": {
+        "golfapp": {}
+      }
     }
   }
 }
