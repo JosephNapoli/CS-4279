@@ -4,7 +4,6 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Amplify } from "aws-amplify";
 import config from "./aws-exports";
-//import "rsuite/dist/rsuite.min.css";
 import "@aws-amplify/ui-react/styles.css";
 import {BrowserRouter} from "react-router-dom";
 

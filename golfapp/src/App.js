@@ -2,21 +2,63 @@ import "bootstrap/dist/css/bootstrap.css";
 import NavigationBar from "./NavigationBar";
 import {Container} from "react-bootstrap";
 import { API, Auth } from "aws-amplify";
+import { getPlayer } from "./graphql/queries";
+import { createPlayer} from "./graphql/mutations";
 import PathRoutes from "./Routes";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import '@aws-amplify/ui-react/styles.css';
+import {useState, useEffect} from "react";
 
-import Home from "./Home";
-import Scoring from "./Scoring";
+function App({ signOut }) {
 
-function App() {
-  return (
-    <div className="App">
-        <NavigationBar/>
-        <Container fluid className="p-3">
-            <PathRoutes/>
-        </Container>
-    </div>
+    const getUserJson = () => JSON.parse(localStorage.getItem("user"));
+    const [currentUser, setCurrentUser] = useState(getUserJson());
+    const [activePage, setActivePage] = useState(null);
+
+    /**
+     * Get user data from DynamoDB and store in application state.
+     */
+    useEffect(() => {
+        async function dynamodbUserSearch() {
+            const user = await Auth.currentAuthenticatedUser();
+            let userData = await API.graphql({
+                query: getPlayer,
+                variables: { id: user.username },
+            });
+            if (!userData?.data.getPlayer) {
+                const userDetails = {
+                    id: user.username,
+                    name: user.attributes.name,
+                    email: user.attributes.email,
+                    wins: 0,
+                    losses: 0,
+                };
+                userData = await API.graphql({
+                    query: createPlayer,
+                    variables: { input: userDetails },
+                });
+            }
+            setCurrentUser(userData.data.getPlayer || userData.data.createPlayer);
+        }
+        dynamodbUserSearch();
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("user", JSON.stringify(currentUser));
+    }, [currentUser]);
+
+    return (
+        <div className="App">
+            <NavigationBar
+                activeKey={activePage}
+                onSelect={setActivePage}
+                signOut={signOut}
+                user={currentUser}
+            />
+            <Container fluid className="p-3">
+                <PathRoutes currUser={currentUser}/>
+            </Container>
+        </div>
   );
 }
 
