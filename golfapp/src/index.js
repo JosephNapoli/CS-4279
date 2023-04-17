@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Amplify } from "aws-amplify";
-import config from "./aws-exports";
+import awsmobile from "./aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import {BrowserRouter} from "react-router-dom";
 
-Amplify.configure(config);
+Amplify.configure(awsmobile);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
