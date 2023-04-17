@@ -13,12 +13,13 @@ export default function NavigationBar({ signOut, user, onSelect, activeKey }) {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav onSelect={onSelect} activeKey={activeKey} className="me-auto">
                         <Link className="nav-link" to="/scoring" eventKey="2">Scoring</Link>
+                        <Link className="nav-link" to="/scores" eventKey="2">Scores</Link>
                         <Link className="nav-link" to="/scheduling" eventKey="3">Scheduling</Link>
-                        <Link className="nav-link" to="/profile" eventKey="4">Profile</Link>
                     </Nav>
                     <Nav onSelect={onSelect} activeKey={activeKey}>
                         <Link
                             className="nav-link"
+                            to="/profile"
                             href={`/user/${user?.id}`}
                             icon={<MemberIcon />}
                             eventKey="4"
