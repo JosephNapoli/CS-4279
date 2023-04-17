@@ -65,6 +65,7 @@ type EagerPlayer = {
   readonly email: string;
   readonly homeCourse: string;
   readonly games?: (GamePlayer | null)[] | null;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -78,6 +79,7 @@ type LazyPlayer = {
   readonly email: string;
   readonly homeCourse: string;
   readonly games: AsyncCollection<GamePlayer>;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

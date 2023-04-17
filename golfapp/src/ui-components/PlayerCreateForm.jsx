@@ -25,18 +25,22 @@ export default function PlayerCreateForm(props) {
   const initialValues = {
     email: "",
     homeCourse: "",
+    name: "",
   };
   const [email, setEmail] = React.useState(initialValues.email);
   const [homeCourse, setHomeCourse] = React.useState(initialValues.homeCourse);
+  const [name, setName] = React.useState(initialValues.name);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setEmail(initialValues.email);
     setHomeCourse(initialValues.homeCourse);
+    setName(initialValues.name);
     setErrors({});
   };
   const validations = {
     email: [{ type: "Required" }, { type: "Email" }],
     homeCourse: [{ type: "Required" }],
+    name: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -66,6 +70,7 @@ export default function PlayerCreateForm(props) {
         let modelFields = {
           email,
           homeCourse,
+          name,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -122,6 +127,7 @@ export default function PlayerCreateForm(props) {
             const modelFields = {
               email: value,
               homeCourse,
+              name,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -147,6 +153,7 @@ export default function PlayerCreateForm(props) {
             const modelFields = {
               email,
               homeCourse: value,
+              name,
             };
             const result = onChange(modelFields);
             value = result?.homeCourse ?? value;
@@ -160,6 +167,32 @@ export default function PlayerCreateForm(props) {
         errorMessage={errors.homeCourse?.errorMessage}
         hasError={errors.homeCourse?.hasError}
         {...getOverrideProps(overrides, "homeCourse")}
+      ></TextField>
+      <TextField
+        label="Name"
+        isRequired={false}
+        isReadOnly={false}
+        value={name}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              email,
+              homeCourse,
+              name: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.name ?? value;
+          }
+          if (errors.name?.hasError) {
+            runValidationTasks("name", value);
+          }
+          setName(value);
+        }}
+        onBlur={() => runValidationTasks("name", name)}
+        errorMessage={errors.name?.errorMessage}
+        hasError={errors.name?.hasError}
+        {...getOverrideProps(overrides, "name")}
       ></TextField>
       <Flex
         justifyContent="space-between"
