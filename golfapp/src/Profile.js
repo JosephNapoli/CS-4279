@@ -2,8 +2,15 @@ import React, {useEffect, useState} from "react";
 import {Button, Col, Form, Modal, Row, Table} from "react-bootstrap";
 import "./profile.css";
 import defaultPic from './images/Default_pfp.png'
+import {API} from "aws-amplify";
+import {getPlayer} from "./graphql/queries";
+import {useParams} from "react-router-dom";
+import {updatePlayer} from "./graphql/mutations";
 
 export default function Profile({ user }) {
+
+    let { id } = useParams();
+
     const [showEditModal, setEditModal] = useState(false);
     const openEditModal = () => setEditModal(true);
     const closeEditModal = () => setEditModal(false);
@@ -12,17 +19,42 @@ export default function Profile({ user }) {
     const closeDeleteModal = () => setDeleteUserModal(false);
     const openDeleteModal = () => setDeleteUserModal(true);
 
-    const [name, setName] = useState("John Doe")
-    const [email, setEmail] = useState("JohnDoe@gmail.com")
-    const [course, setCourse] = useState("Augusta National")
+    const [getName, setName] = useState("John Doe")
+    const [getEmail, setEmail] = useState("JohnDoe@gmail.com")
+    const [getCourse, setCourse] = useState("Augusta National")
     const [profilePicture, setProfilePicture] = useState(defaultPic)
+    const [userData, setUserData] = useState();
 
+    useEffect(() => {
+        async function fetchUserData() {
+            const userData = await API.graphql({
+                query: getPlayer,
+                variables: {id: id},
+            });
+            setUserData(userData.data.getUser);
+        }
+        fetchUserData();
+    }, [id]);
 
-    const saveValues = (name, email, course) => {
+    const saveValues = async(name, email, course) => {
         setName(name)
         setEmail(email)
         setCourse(course)
-    }
+
+        const userDetails = {
+                id: id,
+                name: getName,
+                email: getEmail,
+                homeCourse: getCourse
+            };
+        console.log(userDetails)
+        const userData = await API.graphql({
+                query: updatePlayer,
+                variables: { input: userDetails },
+            });
+            setUserData(userData.data.updatePlayer);
+            console.log(userData)
+        };
 
     const handleProfileChange = (event) => {
         const newPicture = URL.createObjectURL(event.target.files[0])
@@ -53,7 +85,7 @@ export default function Profile({ user }) {
                         <h6>Name:</h6>
                     </Col>
                     <Col>
-                        <p>{name}</p>
+                        <p>{userData?.name}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -61,7 +93,7 @@ export default function Profile({ user }) {
                         <h6>Email:</h6>
                     </Col>
                     <Col>
-                        <p>{email}</p>
+                        <p>{userData?.email}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -69,8 +101,8 @@ export default function Profile({ user }) {
                         <h6>Home Course:</h6>
                     </Col>
                     <Col>
-                        <p>{course}</p>
-                        <GenerateMap course={course}></GenerateMap>
+                        <p>{userData?.homeCourse}</p>
+                        <GenerateMap course={userData?.homeCourse}></GenerateMap>
                     </Col>
                 </Row>
                 <Row>
@@ -106,8 +138,8 @@ export default function Profile({ user }) {
                         >
                             Edit Profile
                         </Button>
-                        <EditModal show={showEditModal} onHide={closeEditModal} onSubmit={saveValues} currName={name}
-                                   currEmail={email}  currCourse= {course}/>
+                        <EditModal show={showEditModal} onHide={closeEditModal} onSubmit={saveValues} currName={userData?.name}
+                                   currEmail={userData?.email}  currCourse= {userData?.homeCourse}/>
                     </Col>
                     <Col sm = {2}>
                         <Button
@@ -141,7 +173,7 @@ export default function Profile({ user }) {
                     </Col>
                 </Row>
                 <br />
-                <h4>{name}'s games</h4>
+                <h4>{getName}'s games</h4>
                 <Table striped bordered hover>
                     <thead>
                     <tr>

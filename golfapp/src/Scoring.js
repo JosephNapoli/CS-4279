@@ -36,7 +36,7 @@ export default function Scoring({ user }) {
         fetchGame();
     }, [id]);
 
-    const submitScore = (hole, p1, p2) => {
+    async function submitScore(hole, p1, p2) {
         const p1Score = [...player1score];
         p1Score[hole-1] = p1;
         setPlayer1Score(p1Score);
@@ -47,20 +47,36 @@ export default function Scoring({ user }) {
         if (p1 < p2) {
             const p1Wins = player1wins + 1;
             setPlayer1Wins(p1Wins);
+            const updatedRecord = {
+                id: id,
+                player1Score: p1Wins,
+            };
+            console.log(updatedRecord);
+            const apiData = await API.graphql({
+                query: updateGame,
+                variables: { input: updatedRecord },
+            });
+            console.log(apiData);
+            await setGame(apiData.data.updateGame);
         }
         if (p2 < p1) {
             const p2Wins = player2wins + 1;
             setPlayer2Wins(p2Wins);
+            const updatedRecord = {
+                id: id,
+                player2Score: p2Wins,
+            };
+            const apiData = await API.graphql({
+                query: updateGame,
+                variables: { input: updatedRecord },
+            });
+            await setGame(apiData.data.updateGame);
         }
     }
 
     async function submitGame() {
         const updatedRecord = {
             id: id,
-            player1Score:
-                player1wins,
-            player2Score:
-                player2wins,
             complete:
                 true,
         };
@@ -99,14 +115,14 @@ export default function Scoring({ user }) {
                         </thead>
                         <tbody>
                         <tr>
-                            <td>John Doe</td>
+                            <td>{game?.player1}</td>
                             {player1score.map((score) =>
                                 <th>{score !== 0 ? score : ""}</th>
                             )}
                             <th>{player1wins}</th>
                         </tr>
                         <tr>
-                            <td>Joe Napoli</td>
+                            <td>{game?.player2}</td>
                             {player2score.map((score) =>
                                 <th>{score !== 0 ? score : ""}</th>
                             )}
@@ -145,12 +161,12 @@ export default function Scoring({ user }) {
 
 const ScoreHoleModal = ({show, onHide, onSubmit}) => {
     const [holeNumber, setHoleNumber] = useState("");
-    const [player1Score, setPlayer1Score] = useState("");
-    const [player2Score, setPlayer2Score] = useState("");
+    const [getPlayer1Score, setPlayer1Score] = useState("");
+    const [getPlayer2Score, setPlayer2Score] = useState("");
 
     const submitScores = () => {
         if(holeNumber > 0 && holeNumber < 10) {
-            onSubmit(holeNumber, player1Score, player2Score);
+            onSubmit(holeNumber, getPlayer1Score, getPlayer2Score);
         }
         setHoleNumber("");
         setPlayer1Score("");
@@ -171,11 +187,11 @@ const ScoreHoleModal = ({show, onHide, onSubmit}) => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="golfer1score">
                         <Form.Label>Golfer 1</Form.Label>
-                        <Form.Control type="number" placeholder="Enter score" value={player1Score} onChange={(e) => setPlayer1Score(e.target.value)} />
+                        <Form.Control type="number" placeholder="Enter score" value={getPlayer1Score} onChange={(e) => setPlayer1Score(e.target.value)} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="golfer2score">
                         <Form.Label>Golfer 2</Form.Label>
-                        <Form.Control type="number" placeholder="Enter score" value={player2Score} onChange={(e) => setPlayer2Score(e.target.value)} />
+                        <Form.Control type="number" placeholder="Enter score" value={getPlayer2Score} onChange={(e) => setPlayer2Score(e.target.value)} />
                     </Form.Group>
                 </Form>
             </Modal.Body>

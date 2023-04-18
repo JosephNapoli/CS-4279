@@ -13,7 +13,7 @@ export default function PathRoutes( { currUser }) {
             <Route path ="/home" element={<Home user={currUser}/>} />
             <Route path="/allscores" element={<AllGames/>} />
             <Route path="/score/:id" element={<Scoring/>} />
-            <Route path="/profile" element={<Profile/>} />
+            <Route path="/profile/:id" element={<Profile user={currUser}/>} />
             <Route path="/scheduling" element={<Scheduling/>} />
             <Route path="/new" element={<CreateGame user={currUser} />} />
         </Routes>

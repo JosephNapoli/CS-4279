@@ -12,7 +12,6 @@ export default function NavigationBar({ signOut, user, onSelect, activeKey }) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav onSelect={onSelect} activeKey={activeKey} className="me-auto">
-                        <Link className="nav-link" to="/score" eventKey="2">Scoring</Link>
                         <Link className="nav-link" to="/allscores" eventKey="2">All Scores</Link>
                         <Link className="nav-link" to="/new" eventKey="2">New Game</Link>
                         <Link className="nav-link" to="/scheduling" eventKey="3">Scheduling</Link>
@@ -20,8 +19,7 @@ export default function NavigationBar({ signOut, user, onSelect, activeKey }) {
                     <Nav onSelect={onSelect} activeKey={activeKey}>
                         <Link
                             className="nav-link"
-                            to="/profile"
-                            href={`/user/${user?.id}`}
+                            to={`/profile/${user?.id}`}
                             icon={<MemberIcon />}
                             eventKey="4"
                         >
