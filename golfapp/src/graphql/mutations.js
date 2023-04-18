@@ -16,7 +16,6 @@ export const createGame = /* GraphQL */ `
       player1Score
       player2Score
       player3Score
-      player4Score
       complete
       PlayGames {
         nextToken
@@ -46,7 +45,6 @@ export const updateGame = /* GraphQL */ `
       player1Score
       player2Score
       player3Score
-      player4Score
       complete
       PlayGames {
         nextToken
@@ -76,7 +74,6 @@ export const deleteGame = /* GraphQL */ `
       player1Score
       player2Score
       player3Score
-      player4Score
       complete
       PlayGames {
         nextToken
@@ -104,6 +101,7 @@ export const createPlayer = /* GraphQL */ `
         nextToken
         startedAt
       }
+      name
       createdAt
       updatedAt
       _version
@@ -125,6 +123,7 @@ export const updatePlayer = /* GraphQL */ `
         nextToken
         startedAt
       }
+      name
       createdAt
       updatedAt
       _version
@@ -146,6 +145,7 @@ export const deletePlayer = /* GraphQL */ `
         nextToken
         startedAt
       }
+      name
       createdAt
       updatedAt
       _version
@@ -173,7 +173,6 @@ export const createGamePlayer = /* GraphQL */ `
         player1Score
         player2Score
         player3Score
-        player4Score
         complete
         leader
         createdAt
@@ -186,6 +185,7 @@ export const createGamePlayer = /* GraphQL */ `
         id
         email
         homeCourse
+        name
         createdAt
         updatedAt
         _version
@@ -219,7 +219,6 @@ export const updateGamePlayer = /* GraphQL */ `
         player1Score
         player2Score
         player3Score
-        player4Score
         complete
         leader
         createdAt
@@ -232,6 +231,7 @@ export const updateGamePlayer = /* GraphQL */ `
         id
         email
         homeCourse
+        name
         createdAt
         updatedAt
         _version
@@ -265,7 +265,6 @@ export const deleteGamePlayer = /* GraphQL */ `
         player1Score
         player2Score
         player3Score
-        player4Score
         complete
         leader
         createdAt
@@ -278,6 +277,7 @@ export const deleteGamePlayer = /* GraphQL */ `
         id
         email
         homeCourse
+        name
         createdAt
         updatedAt
         _version

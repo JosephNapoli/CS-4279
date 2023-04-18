@@ -13,7 +13,6 @@ export const getGame = /* GraphQL */ `
       player1Score
       player2Score
       player3Score
-      player4Score
       complete
       PlayGames {
         nextToken
@@ -45,7 +44,6 @@ export const listGames = /* GraphQL */ `
         player1Score
         player2Score
         player3Score
-        player4Score
         complete
         leader
         createdAt
@@ -82,7 +80,6 @@ export const syncGames = /* GraphQL */ `
         player1Score
         player2Score
         player3Score
-        player4Score
         complete
         leader
         createdAt
@@ -106,6 +103,7 @@ export const getPlayer = /* GraphQL */ `
         nextToken
         startedAt
       }
+      name
       createdAt
       updatedAt
       _version
@@ -125,6 +123,7 @@ export const listPlayers = /* GraphQL */ `
         id
         email
         homeCourse
+        name
         createdAt
         updatedAt
         _version
@@ -153,6 +152,7 @@ export const syncPlayers = /* GraphQL */ `
         id
         email
         homeCourse
+        name
         createdAt
         updatedAt
         _version
@@ -180,7 +180,6 @@ export const getGamePlayer = /* GraphQL */ `
         player1Score
         player2Score
         player3Score
-        player4Score
         complete
         leader
         createdAt
@@ -193,6 +192,7 @@ export const getGamePlayer = /* GraphQL */ `
         id
         email
         homeCourse
+        name
         createdAt
         updatedAt
         _version

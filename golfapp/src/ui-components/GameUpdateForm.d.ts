@@ -19,10 +19,9 @@ export declare type GameUpdateFormInputValues = {
     player3?: string;
     player4?: string;
     date?: string;
-    player1Score?: number[];
-    player2Score?: number[];
+    player1Score?: number;
+    player2Score?: number;
     player3Score?: number[];
-    player4Score?: number[];
     complete?: boolean;
     leader?: string;
 };
@@ -35,7 +34,6 @@ export declare type GameUpdateFormValidationValues = {
     player1Score?: ValidationFunction<number>;
     player2Score?: ValidationFunction<number>;
     player3Score?: ValidationFunction<number>;
-    player4Score?: ValidationFunction<number>;
     complete?: ValidationFunction<boolean>;
     leader?: ValidationFunction<string>;
 };
@@ -50,7 +48,6 @@ export declare type GameUpdateFormOverridesProps = {
     player1Score?: PrimitiveOverrideProps<TextFieldProps>;
     player2Score?: PrimitiveOverrideProps<TextFieldProps>;
     player3Score?: PrimitiveOverrideProps<TextFieldProps>;
-    player4Score?: PrimitiveOverrideProps<TextFieldProps>;
     complete?: PrimitiveOverrideProps<SwitchFieldProps>;
     leader?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

@@ -1,7 +1,13 @@
 import {Button, Col, Container, Form, Modal, Row, Table} from "react-bootstrap";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {getGame} from "./graphql/queries";
+import {API} from "aws-amplify";
+import {useParams} from "react-router-dom";
+import {updateGame} from "./graphql/mutations";
 
 export default function Scoring({ user }) {
+    //let navigate = useNavigate();
+    let { id } = useParams();
 
     const [showCompleteModal, setCompleteModal] = useState(false);
     const [showHoleModal, setHoleModal] = useState(false)
@@ -11,11 +17,24 @@ export default function Scoring({ user }) {
     const openHoleModal = () => setHoleModal(true);
     const closeHoleModal = () => setHoleModal(false);
 
+    const [game, setGame] = useState();
+
     const [player1score, setPlayer1Score] = useState([0,0,0,0,0,0,0,0,0]);
     const [player2score, setPlayer2Score] = useState([0,0,0,0,0,0,0,0,0]);
 
     const [player1wins, setPlayer1Wins] = useState(0);
     const [player2wins, setPlayer2Wins] = useState(0);
+
+    useEffect(() => {
+        async function fetchGame() {
+            const apiData = await API.graphql({
+                query: getGame,
+                variables: { id: id },
+            });
+            setGame(apiData.data.getGame);
+        }
+        fetchGame();
+    }, [id]);
 
     const submitScore = (hole, p1, p2) => {
         const p1Score = [...player1score];
@@ -33,6 +52,27 @@ export default function Scoring({ user }) {
             const p2Wins = player2wins + 1;
             setPlayer2Wins(p2Wins);
         }
+    }
+
+    async function submitGame() {
+        const updatedRecord = {
+            id: id,
+            player1Score:
+                player1wins,
+            player2Score:
+                player2wins,
+            complete:
+                true,
+        };
+        console.log(updatedRecord)
+        const apiData = await API.graphql({
+            query: updateGame,
+            variables: { input: updatedRecord },
+        });
+        console.log(apiData)
+        await setGame(apiData.data.updateGame);
+
+        closeCompleteModal()
     }
 
     return (
@@ -95,26 +135,7 @@ export default function Scoring({ user }) {
                     >
                         Mark Match as Completed
                     </Button>
-                    <Modal show={showCompleteModal} onHide={closeCompleteModal}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Confirm Match Completion</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            Match completion is not reversible. Are you sure?
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={closeCompleteModal}>
-                                Cancel
-                            </Button>
-                            <Button
-                                data-testid="confirm-completion"
-                                variant="success"
-                                onClick={closeCompleteModal}
-                            >
-                                Confirm Completion
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
+                    <CompleteGameModal show={showCompleteModal} onHide={closeCompleteModal} onSubmit={submitGame}/>
                 </Col>
                 <Col />
             </Row>
@@ -164,6 +185,31 @@ const ScoreHoleModal = ({show, onHide, onSubmit}) => {
                 </Button>
                 <Button variant="primary" onClick={submitScores}>
                     Submit Scores
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
+const CompleteGameModal = ({show, onHide, onSubmit}) => {
+    return (
+        <Modal show={show} onHide={onHide}>
+            <Modal.Header closeButton>
+                <Modal.Title>Confirm Match Completion</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                Match completion is not reversible. Are you sure?
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={onHide}>
+                    Cancel
+                </Button>
+                <Button
+                    data-testid="confirm-completion"
+                    variant="success"
+                    onClick={onSubmit}
+                >
+                    Confirm Completion
                 </Button>
             </Modal.Footer>
         </Modal>

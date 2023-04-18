@@ -14,14 +14,14 @@ export const schema = {
                     "name": "player1",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "player2": {
                     "name": "player2",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "player3": {
@@ -47,30 +47,20 @@ export const schema = {
                 },
                 "player1Score": {
                     "name": "player1Score",
-                    "isArray": true,
+                    "isArray": false,
                     "type": "Int",
-                    "isRequired": true,
-                    "attributes": [],
-                    "isArrayNullable": true
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "player2Score": {
                     "name": "player2Score",
-                    "isArray": true,
+                    "isArray": false,
                     "type": "Int",
-                    "isRequired": true,
-                    "attributes": [],
-                    "isArrayNullable": true
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "player3Score": {
                     "name": "player3Score",
-                    "isArray": true,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "player4Score": {
-                    "name": "player4Score",
                     "isArray": true,
                     "type": "Int",
                     "isRequired": false,
@@ -163,14 +153,14 @@ export const schema = {
                     "name": "email",
                     "isArray": false,
                     "type": "AWSEmail",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "homeCourse": {
                     "name": "homeCourse",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "games": {
@@ -340,5 +330,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.0",
-    "version": "647bde56056dbec5d2196d0a12923f29"
+    "version": "fffb67f75eead8964eaa57e2a0977a15"
 };

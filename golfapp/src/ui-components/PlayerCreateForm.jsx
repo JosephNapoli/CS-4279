@@ -38,8 +38,8 @@ export default function PlayerCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    email: [{ type: "Required" }, { type: "Email" }],
-    homeCourse: [{ type: "Required" }],
+    email: [{ type: "Email" }],
+    homeCourse: [],
     name: [],
   };
   const runValidationTasks = async (
@@ -118,7 +118,7 @@ export default function PlayerCreateForm(props) {
     >
       <TextField
         label="Email"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={email}
         onChange={(e) => {
@@ -144,7 +144,7 @@ export default function PlayerCreateForm(props) {
       ></TextField>
       <TextField
         label="Home course"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={homeCourse}
         onChange={(e) => {

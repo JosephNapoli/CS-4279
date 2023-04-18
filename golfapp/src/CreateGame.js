@@ -20,41 +20,20 @@ export default function CreateGame({ user }) {
     const [showAlert, setAlert] = useState(false);
     const [users, setUsers] = useState([]);
 
-    /**
-     * Validate that user is a scorer or admin. Fetch user list
-     * to populate selector fields.
-     */
-    useEffect(() => {
-        async function fetchUsers() {
-            setUsers(
-                (await API.graphql({ query: listPlayers })).data?.listPlayers?.items
-            );
-        }
-        fetchUsers();
-    }, [navigate, user]);
+    const [player1, setPlayer1] = useState(" ")
+    const [player2, setPlayer2] = useState(" ")
 
     /**
      * Handle submission of the "create game" form.
      */
     async function handleSubmit() {
-        let p1 = $("#player1");
-        let p2 = $("#player2");
-
-        // Validate player uniqueness
-        let playerArray = [p1.val(), p2.val()];
-        if (new Set(playerArray).size !== playerArray.length) {
-            $("#alertBox").text("All four players must be unique. Please correct.");
-            setAlert(true);
-            return;
-        }
+        let p2 = player2;
 
         // Compile game details
         const gameDetails = {
             complete: false,
-            player1: p1.val(),
-            player2: p2.val(),
-            player1name: p1.find("option:selected").text(),
-            player2name: p2.find("option:selected").text(),
+            player1: player1,
+            player2: player2,
             player1Score: 0,
             player2Score: 0,
         };
@@ -64,11 +43,9 @@ export default function CreateGame({ user }) {
             gameDetails.player1,
             gameDetails.player2,
         ];
+        console.log(gameDetails)
         await API.graphql({ query: createGame, variables: { input: gameDetails } })
             .then(async (response) => {
-                for (const player of playerList) {
-                    await addGameToProfile(player, response.data.createGame.id);
-                }
                 navigate(`/score/${response.data.createGame.id}`);
             })
             .catch((err) => console.log(err));
@@ -89,15 +66,8 @@ export default function CreateGame({ user }) {
                         <Row>
                             <Col className="card">
                                 <h5 className="d-flex justify-content-center">Player 1</h5>
-                                <Form.Group className="mb-2" controlId="selectplayer1">
-                                    <Form.Label id="p1-label">Player 1</Form.Label>
-                                    <Form.Select id="player1" aria-labelledby="p1-label">
-                                        {users.map((user) => (
-                                            <option key={user.id} value={user.id}>
-                                                {user.name}
-                                            </option>
-                                        ))}
-                                    </Form.Select>
+                                <Form.Group className="mb-3" controlId="selectplayer1">
+                                    <Form.Control type="string" placeholder="" onChange={(e) => setPlayer1(e.target.value)} value={player1}/>
                                 </Form.Group>
                             </Col>
                             <Col xs={1}>
@@ -107,15 +77,8 @@ export default function CreateGame({ user }) {
                             </Col>
                             <Col className="card">
                                 <h5 className="d-flex justify-content-center">Player 2</h5>
-                                <Form.Group className="mb-2" controlId="selectplayer3">
-                                    <Form.Label id="p3-label">Player 2</Form.Label>
-                                    <Form.Select id="player3" aria-labelledby="p3-label">
-                                        {users.map((user) => (
-                                            <option key={user.id} value={user.id}>
-                                                {user.name}
-                                            </option>
-                                        ))}
-                                    </Form.Select>
+                                <Form.Group className="mb-3" controlId="selectplayer2">
+                                    <Form.Control type="string" placeholder="" onChange={(e) => setPlayer2(e.target.value)} value={player2}/>
                                 </Form.Group>
                             </Col>
                         </Row>

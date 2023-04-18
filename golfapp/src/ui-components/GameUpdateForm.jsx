@@ -199,10 +199,9 @@ export default function GameUpdateForm(props) {
     player3: "",
     player4: "",
     date: "",
-    player1Score: [],
-    player2Score: [],
+    player1Score: "",
+    player2Score: "",
     player3Score: [],
-    player4Score: [],
     complete: false,
     leader: "",
   };
@@ -220,9 +219,6 @@ export default function GameUpdateForm(props) {
   const [player3Score, setPlayer3Score] = React.useState(
     initialValues.player3Score
   );
-  const [player4Score, setPlayer4Score] = React.useState(
-    initialValues.player4Score
-  );
   const [complete, setComplete] = React.useState(initialValues.complete);
   const [leader, setLeader] = React.useState(initialValues.leader);
   const [errors, setErrors] = React.useState({});
@@ -235,14 +231,10 @@ export default function GameUpdateForm(props) {
     setPlayer3(cleanValues.player3);
     setPlayer4(cleanValues.player4);
     setDate(cleanValues.date);
-    setPlayer1Score(cleanValues.player1Score ?? []);
-    setCurrentPlayer1ScoreValue("");
-    setPlayer2Score(cleanValues.player2Score ?? []);
-    setCurrentPlayer2ScoreValue("");
+    setPlayer1Score(cleanValues.player1Score);
+    setPlayer2Score(cleanValues.player2Score);
     setPlayer3Score(cleanValues.player3Score ?? []);
     setCurrentPlayer3ScoreValue("");
-    setPlayer4Score(cleanValues.player4Score ?? []);
-    setCurrentPlayer4ScoreValue("");
     setComplete(cleanValues.complete);
     setLeader(cleanValues.leader);
     setErrors({});
@@ -258,28 +250,18 @@ export default function GameUpdateForm(props) {
     queryData();
   }, [idProp, gameModelProp]);
   React.useEffect(resetStateValues, [gameRecord]);
-  const [currentPlayer1ScoreValue, setCurrentPlayer1ScoreValue] =
-    React.useState("");
-  const player1ScoreRef = React.createRef();
-  const [currentPlayer2ScoreValue, setCurrentPlayer2ScoreValue] =
-    React.useState("");
-  const player2ScoreRef = React.createRef();
   const [currentPlayer3ScoreValue, setCurrentPlayer3ScoreValue] =
     React.useState("");
   const player3ScoreRef = React.createRef();
-  const [currentPlayer4ScoreValue, setCurrentPlayer4ScoreValue] =
-    React.useState("");
-  const player4ScoreRef = React.createRef();
   const validations = {
-    player1: [{ type: "Required" }],
-    player2: [{ type: "Required" }],
+    player1: [],
+    player2: [],
     player3: [],
     player4: [],
     date: [],
-    player1Score: [{ type: "Required" }],
-    player2Score: [{ type: "Required" }],
+    player1Score: [],
+    player2Score: [],
     player3Score: [],
-    player4Score: [],
     complete: [],
     leader: [],
   };
@@ -317,7 +299,6 @@ export default function GameUpdateForm(props) {
           player1Score,
           player2Score,
           player3Score,
-          player4Score,
           complete,
           leader,
         };
@@ -368,7 +349,7 @@ export default function GameUpdateForm(props) {
     >
       <TextField
         label="Player1"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={player1}
         onChange={(e) => {
@@ -383,7 +364,6 @@ export default function GameUpdateForm(props) {
               player1Score,
               player2Score,
               player3Score,
-              player4Score,
               complete,
               leader,
             };
@@ -402,7 +382,7 @@ export default function GameUpdateForm(props) {
       ></TextField>
       <TextField
         label="Player2"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={player2}
         onChange={(e) => {
@@ -417,7 +397,6 @@ export default function GameUpdateForm(props) {
               player1Score,
               player2Score,
               player3Score,
-              player4Score,
               complete,
               leader,
             };
@@ -451,7 +430,6 @@ export default function GameUpdateForm(props) {
               player1Score,
               player2Score,
               player3Score,
-              player4Score,
               complete,
               leader,
             };
@@ -485,7 +463,6 @@ export default function GameUpdateForm(props) {
               player1Score,
               player2Score,
               player3Score,
-              player4Score,
               complete,
               leader,
             };
@@ -520,7 +497,6 @@ export default function GameUpdateForm(props) {
               player1Score,
               player2Score,
               player3Score,
-              player4Score,
               complete,
               leader,
             };
@@ -537,9 +513,17 @@ export default function GameUpdateForm(props) {
         hasError={errors.date?.hasError}
         {...getOverrideProps(overrides, "date")}
       ></TextField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
+      <TextField
+        label="Player1 score"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={player1Score}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
               player1,
@@ -547,57 +531,36 @@ export default function GameUpdateForm(props) {
               player3,
               player4,
               date,
-              player1Score: values,
+              player1Score: value,
               player2Score,
               player3Score,
-              player4Score,
               complete,
               leader,
             };
             const result = onChange(modelFields);
-            values = result?.player1Score ?? values;
+            value = result?.player1Score ?? value;
           }
-          setPlayer1Score(values);
-          setCurrentPlayer1ScoreValue("");
+          if (errors.player1Score?.hasError) {
+            runValidationTasks("player1Score", value);
+          }
+          setPlayer1Score(value);
         }}
-        currentFieldValue={currentPlayer1ScoreValue}
-        label={"Player1 score"}
-        items={player1Score}
-        hasError={errors?.player1Score?.hasError}
-        errorMessage={errors?.player1Score?.errorMessage}
-        setFieldValue={setCurrentPlayer1ScoreValue}
-        inputFieldRef={player1ScoreRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Player1 score"
-          isRequired={true}
-          isReadOnly={false}
-          type="number"
-          step="any"
-          value={currentPlayer1ScoreValue}
-          onChange={(e) => {
-            let value = isNaN(parseInt(e.target.value))
-              ? e.target.value
-              : parseInt(e.target.value);
-            if (errors.player1Score?.hasError) {
-              runValidationTasks("player1Score", value);
-            }
-            setCurrentPlayer1ScoreValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks("player1Score", currentPlayer1ScoreValue)
-          }
-          errorMessage={errors.player1Score?.errorMessage}
-          hasError={errors.player1Score?.hasError}
-          ref={player1ScoreRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "player1Score")}
-        ></TextField>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
+        onBlur={() => runValidationTasks("player1Score", player1Score)}
+        errorMessage={errors.player1Score?.errorMessage}
+        hasError={errors.player1Score?.hasError}
+        {...getOverrideProps(overrides, "player1Score")}
+      ></TextField>
+      <TextField
+        label="Player2 score"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={player2Score}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
               player1,
@@ -606,53 +569,24 @@ export default function GameUpdateForm(props) {
               player4,
               date,
               player1Score,
-              player2Score: values,
+              player2Score: value,
               player3Score,
-              player4Score,
               complete,
               leader,
             };
             const result = onChange(modelFields);
-            values = result?.player2Score ?? values;
+            value = result?.player2Score ?? value;
           }
-          setPlayer2Score(values);
-          setCurrentPlayer2ScoreValue("");
+          if (errors.player2Score?.hasError) {
+            runValidationTasks("player2Score", value);
+          }
+          setPlayer2Score(value);
         }}
-        currentFieldValue={currentPlayer2ScoreValue}
-        label={"Player2 score"}
-        items={player2Score}
-        hasError={errors?.player2Score?.hasError}
-        errorMessage={errors?.player2Score?.errorMessage}
-        setFieldValue={setCurrentPlayer2ScoreValue}
-        inputFieldRef={player2ScoreRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Player2 score"
-          isRequired={true}
-          isReadOnly={false}
-          type="number"
-          step="any"
-          value={currentPlayer2ScoreValue}
-          onChange={(e) => {
-            let value = isNaN(parseInt(e.target.value))
-              ? e.target.value
-              : parseInt(e.target.value);
-            if (errors.player2Score?.hasError) {
-              runValidationTasks("player2Score", value);
-            }
-            setCurrentPlayer2ScoreValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks("player2Score", currentPlayer2ScoreValue)
-          }
-          errorMessage={errors.player2Score?.errorMessage}
-          hasError={errors.player2Score?.hasError}
-          ref={player2ScoreRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "player2Score")}
-        ></TextField>
-      </ArrayField>
+        onBlur={() => runValidationTasks("player2Score", player2Score)}
+        errorMessage={errors.player2Score?.errorMessage}
+        hasError={errors.player2Score?.hasError}
+        {...getOverrideProps(overrides, "player2Score")}
+      ></TextField>
       <ArrayField
         onChange={async (items) => {
           let values = items;
@@ -666,7 +600,6 @@ export default function GameUpdateForm(props) {
               player1Score,
               player2Score,
               player3Score: values,
-              player4Score,
               complete,
               leader,
             };
@@ -711,64 +644,6 @@ export default function GameUpdateForm(props) {
           {...getOverrideProps(overrides, "player3Score")}
         ></TextField>
       </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              player1,
-              player2,
-              player3,
-              player4,
-              date,
-              player1Score,
-              player2Score,
-              player3Score,
-              player4Score: values,
-              complete,
-              leader,
-            };
-            const result = onChange(modelFields);
-            values = result?.player4Score ?? values;
-          }
-          setPlayer4Score(values);
-          setCurrentPlayer4ScoreValue("");
-        }}
-        currentFieldValue={currentPlayer4ScoreValue}
-        label={"Player4 score"}
-        items={player4Score}
-        hasError={errors?.player4Score?.hasError}
-        errorMessage={errors?.player4Score?.errorMessage}
-        setFieldValue={setCurrentPlayer4ScoreValue}
-        inputFieldRef={player4ScoreRef}
-        defaultFieldValue={""}
-      >
-        <TextField
-          label="Player4 score"
-          isRequired={false}
-          isReadOnly={false}
-          type="number"
-          step="any"
-          value={currentPlayer4ScoreValue}
-          onChange={(e) => {
-            let value = isNaN(parseInt(e.target.value))
-              ? e.target.value
-              : parseInt(e.target.value);
-            if (errors.player4Score?.hasError) {
-              runValidationTasks("player4Score", value);
-            }
-            setCurrentPlayer4ScoreValue(value);
-          }}
-          onBlur={() =>
-            runValidationTasks("player4Score", currentPlayer4ScoreValue)
-          }
-          errorMessage={errors.player4Score?.errorMessage}
-          hasError={errors.player4Score?.hasError}
-          ref={player4ScoreRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "player4Score")}
-        ></TextField>
-      </ArrayField>
       <SwitchField
         label="Complete"
         defaultChecked={false}
@@ -786,7 +661,6 @@ export default function GameUpdateForm(props) {
               player1Score,
               player2Score,
               player3Score,
-              player4Score,
               complete: value,
               leader,
             };
@@ -820,7 +694,6 @@ export default function GameUpdateForm(props) {
               player1Score,
               player2Score,
               player3Score,
-              player4Score,
               complete,
               leader: value,
             };

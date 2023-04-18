@@ -21,17 +21,17 @@ function App({ signOut }) {
     useEffect(() => {
         async function dynamodbUserSearch() {
             const user = await Auth.currentAuthenticatedUser();
+            console.log(user)
             let userData = await API.graphql({
                 query: getPlayer,
                 variables: { id: user.username },
             });
+            console.log(userData);
             if (!userData?.data.getPlayer) {
                 const userDetails = {
                     id: user.username,
                     name: user.attributes.name,
                     email: user.attributes.email,
-                    wins: 0,
-                    losses: 0,
                 };
                 userData = await API.graphql({
                     query: createPlayer,

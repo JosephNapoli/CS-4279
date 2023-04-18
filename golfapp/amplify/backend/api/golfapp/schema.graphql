@@ -1,14 +1,13 @@
 type Game @model @auth(rules: [{allow: public}]) {
   id: ID!
-  player1: String!
-  player2: String!
+  player1: String
+  player2: String
   player3: String
   player4: String
   date: AWSDate
-  player1Score: [Int!]
-  player2Score: [Int!]
+  player1Score: Int
+  player2Score: Int
   player3Score: [Int]
-  player4Score: [Int]
   complete: Boolean
   PlayGames: [Player] @manyToMany(relationName: "GamePlayer")
   leader: String
@@ -16,9 +15,8 @@ type Game @model @auth(rules: [{allow: public}]) {
 
 type Player @model @auth(rules: [{allow: public}]) {
   id: ID!
-  email: AWSEmail!
-  homeCourse: String!
+  email: AWSEmail
+  homeCourse: String
   games: [Game] @manyToMany(relationName: "GamePlayer")
   name: String
-}
- 
+} 
