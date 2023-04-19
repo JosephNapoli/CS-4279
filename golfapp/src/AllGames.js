@@ -31,6 +31,7 @@ export default function AllGames() {
                             <th>Player 1</th>
                             <th>Player 2</th>
                             <th>Score</th>
+                            <th>Completed</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -48,6 +49,9 @@ export default function AllGames() {
                                 </td>
                                 <td>
                                     {game.player1Score} - {game.player2Score}
+                                </td>
+                                <td>
+                                    <strong>{game.complete ? "Complete" : "Active"}</strong>
                                 </td>
                             </tr>
                         ))}

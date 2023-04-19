@@ -19,14 +19,10 @@ export const createGame = /* GraphQL */ `
       complete
       PlayGames {
         nextToken
-        startedAt
       }
       leader
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -48,14 +44,10 @@ export const updateGame = /* GraphQL */ `
       complete
       PlayGames {
         nextToken
-        startedAt
       }
       leader
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -77,14 +69,10 @@ export const deleteGame = /* GraphQL */ `
       complete
       PlayGames {
         nextToken
-        startedAt
       }
       leader
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -99,14 +87,10 @@ export const createPlayer = /* GraphQL */ `
       homeCourse
       games {
         nextToken
-        startedAt
       }
       name
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -121,14 +105,10 @@ export const updatePlayer = /* GraphQL */ `
       homeCourse
       games {
         nextToken
-        startedAt
       }
       name
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -143,14 +123,10 @@ export const deletePlayer = /* GraphQL */ `
       homeCourse
       games {
         nextToken
-        startedAt
       }
       name
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -177,9 +153,6 @@ export const createGamePlayer = /* GraphQL */ `
         leader
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       player {
         id
@@ -188,15 +161,9 @@ export const createGamePlayer = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -223,9 +190,6 @@ export const updateGamePlayer = /* GraphQL */ `
         leader
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       player {
         id
@@ -234,15 +198,9 @@ export const updateGamePlayer = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -269,9 +227,6 @@ export const deleteGamePlayer = /* GraphQL */ `
         leader
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       player {
         id
@@ -280,15 +235,9 @@ export const deleteGamePlayer = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;

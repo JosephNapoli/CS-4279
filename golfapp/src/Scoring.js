@@ -31,6 +31,8 @@ export default function Scoring({ user }) {
                 query: getGame,
                 variables: { id: id },
             });
+            setPlayer1Wins(apiData.data.getGame.player1Score);
+            setPlayer2Wins(apiData.data.getGame.player2Score);
             setGame(apiData.data.getGame);
         }
         fetchGame();

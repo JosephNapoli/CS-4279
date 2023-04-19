@@ -36,24 +36,25 @@ export default function Profile({ user }) {
         fetchUserData();
     }, [id]);
 
-    const saveValues = async(name, email, course) => {
-        setName(name)
-        setEmail(email)
-        setCourse(course)
+    const saveValues = async(name1, email1, course1) => {
+        setName(name1)
+        setEmail(email1)
+        setCourse(course1)
 
         const userDetails = {
                 id: id,
-                name: getName,
-                email: getEmail,
-                homeCourse: getCourse
+                name: name1,
+                email: email1,
+                homeCourse: course1
             };
         console.log(userDetails)
         const userData = await API.graphql({
                 query: updatePlayer,
                 variables: { input: userDetails },
             });
-            setUserData(userData.data.updatePlayer);
-            console.log(userData)
+        setUserData(userData.data.updatePlayer);
+        console.log(userData);
+        window.location.reload();
         };
 
     const handleProfileChange = (event) => {
@@ -85,7 +86,7 @@ export default function Profile({ user }) {
                         <h6>Name:</h6>
                     </Col>
                     <Col>
-                        <p>{userData?.name}</p>
+                        <p>{user?.name}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -93,7 +94,7 @@ export default function Profile({ user }) {
                         <h6>Email:</h6>
                     </Col>
                     <Col>
-                        <p>{userData?.email}</p>
+                        <p>{user?.email}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -101,8 +102,8 @@ export default function Profile({ user }) {
                         <h6>Home Course:</h6>
                     </Col>
                     <Col>
-                        <p>{userData?.homeCourse}</p>
-                        <GenerateMap course={userData?.homeCourse}></GenerateMap>
+                        <p>{user?.homeCourse}</p>
+                        <GenerateMap course={user?.homeCourse}></GenerateMap>
                     </Col>
                 </Row>
                 <Row>
@@ -224,7 +225,7 @@ const EditModal = ({show, onHide, onSubmit, currName, currEmail, currCourse}) =>
                         <input className="userIn"   type = "text" defaultValue={currEmail} onChange={(e) => setEmail(e.target.value)}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                       <Form.Label>Favorite Course </Form.Label>
+                       <Form.Label>Home Course </Form.Label>
                         <input className="userIn"   type = "text" defaultValue={currCourse} onChange={(e) => setCourse(e.target.value)}/>
                     </Form.Group>
                 </Form>
