@@ -115,8 +115,8 @@ export default function Profile({ user }) {
                         >
                             Edit Profile
                         </Button>
-                        <EditModal show={showEditModal} onHide={closeEditModal} onSubmit={saveValues} currName={userData?.name}
-                                   currEmail={userData?.email}  currCourse= {userData?.homeCourse}/>
+                        <EditModal show={showEditModal} onHide={closeEditModal} onSubmit={saveValues} currName={user?.name}
+                                   currEmail={user?.email}  currCourse= {user?.homeCourse}/>
                     </Col>
                     <Col sm = {2}>
                         <Button
