@@ -106,30 +106,6 @@ export default function Profile({ user }) {
                         <GenerateMap course={user?.homeCourse}></GenerateMap>
                     </Col>
                 </Row>
-                <Row>
-                    <Col sm={2}>
-                        <h6>Wins:</h6>
-                    </Col>
-                    <Col>
-                        <p>1</p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm={2}>
-                        <h6>Losses:</h6>
-                    </Col>
-                    <Col>
-                        <p>0</p>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm={2}>
-                        <h6>Win Rate:</h6>
-                    </Col>
-                    <Col>
-                        <p>100%</p>
-                    </Col>
-                </Row>
                 <Row >
                     <Col sm = {2}>
                         <Button // TODO: FIX STYLING FOR THIS BUTTON
