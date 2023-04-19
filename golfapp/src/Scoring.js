@@ -33,6 +33,8 @@ export default function Scoring({ user }) {
             });
             setPlayer1Wins(apiData.data.getGame.player1Score);
             setPlayer2Wins(apiData.data.getGame.player2Score);
+            setPlayer1Score(apiData.data.getGame.player1Card);
+            setPlayer2Score(apiData.data.getGame.player2Card);
             setGame(apiData.data.getGame);
         }
         fetchGame();

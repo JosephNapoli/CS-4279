@@ -174,25 +174,6 @@ export default function Profile({ user }) {
                     </Col>
                 </Row>
                 <br />
-                <h4>{getName}'s games</h4>
-                <Table striped bordered hover>
-                    <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Opponent</th>
-                        <th>W/L</th>
-                        <th>Final Score</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>3/12/23</td>
-                        <th>Joe Napoli</th>
-                        <th>W</th>
-                        <th>5-4</th>
-                    </tr>
-                    </tbody>
-                </Table>
             </Col>
             <Col sm={2} />
         </Row>

@@ -36,6 +36,8 @@ export default function CreateGame({ user }) {
             player2: player2,
             player1Score: 0,
             player2Score: 0,
+            player1Card: [0,0,0,0,0,0,0,0,0],
+            player2Card: [0,0,0,0,0,0,0,0,0],
         };
 
         // Post game to DynamoDB
