@@ -21,6 +21,8 @@ export const createGame = /* GraphQL */ `
         nextToken
       }
       leader
+      player1Card
+      player2Card
       createdAt
       updatedAt
     }
@@ -46,6 +48,8 @@ export const updateGame = /* GraphQL */ `
         nextToken
       }
       leader
+      player1Card
+      player2Card
       createdAt
       updatedAt
     }
@@ -71,6 +75,8 @@ export const deleteGame = /* GraphQL */ `
         nextToken
       }
       leader
+      player1Card
+      player2Card
       createdAt
       updatedAt
     }
@@ -151,6 +157,8 @@ export const createGamePlayer = /* GraphQL */ `
         player3Score
         complete
         leader
+        player1Card
+        player2Card
         createdAt
         updatedAt
       }
@@ -188,6 +196,8 @@ export const updateGamePlayer = /* GraphQL */ `
         player3Score
         complete
         leader
+        player1Card
+        player2Card
         createdAt
         updatedAt
       }
@@ -225,6 +235,8 @@ export const deleteGamePlayer = /* GraphQL */ `
         player3Score
         complete
         leader
+        player1Card
+        player2Card
         createdAt
         updatedAt
       }

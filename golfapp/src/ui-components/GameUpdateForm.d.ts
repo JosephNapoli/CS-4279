@@ -24,6 +24,8 @@ export declare type GameUpdateFormInputValues = {
     player3Score?: number[];
     complete?: boolean;
     leader?: string;
+    player1Card?: number[];
+    player2Card?: number[];
 };
 export declare type GameUpdateFormValidationValues = {
     player1?: ValidationFunction<string>;
@@ -36,6 +38,8 @@ export declare type GameUpdateFormValidationValues = {
     player3Score?: ValidationFunction<number>;
     complete?: ValidationFunction<boolean>;
     leader?: ValidationFunction<string>;
+    player1Card?: ValidationFunction<number>;
+    player2Card?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type GameUpdateFormOverridesProps = {
@@ -50,6 +54,8 @@ export declare type GameUpdateFormOverridesProps = {
     player3Score?: PrimitiveOverrideProps<TextFieldProps>;
     complete?: PrimitiveOverrideProps<SwitchFieldProps>;
     leader?: PrimitiveOverrideProps<TextFieldProps>;
+    player1Card?: PrimitiveOverrideProps<TextFieldProps>;
+    player2Card?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type GameUpdateFormProps = React.PropsWithChildren<{
     overrides?: GameUpdateFormOverridesProps | undefined | null;

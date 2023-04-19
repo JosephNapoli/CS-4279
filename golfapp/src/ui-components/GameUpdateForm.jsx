@@ -204,6 +204,8 @@ export default function GameUpdateForm(props) {
     player3Score: [],
     complete: false,
     leader: "",
+    player1Card: [],
+    player2Card: [],
   };
   const [player1, setPlayer1] = React.useState(initialValues.player1);
   const [player2, setPlayer2] = React.useState(initialValues.player2);
@@ -221,6 +223,12 @@ export default function GameUpdateForm(props) {
   );
   const [complete, setComplete] = React.useState(initialValues.complete);
   const [leader, setLeader] = React.useState(initialValues.leader);
+  const [player1Card, setPlayer1Card] = React.useState(
+    initialValues.player1Card
+  );
+  const [player2Card, setPlayer2Card] = React.useState(
+    initialValues.player2Card
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = gameRecord
@@ -237,6 +245,10 @@ export default function GameUpdateForm(props) {
     setCurrentPlayer3ScoreValue("");
     setComplete(cleanValues.complete);
     setLeader(cleanValues.leader);
+    setPlayer1Card(cleanValues.player1Card ?? []);
+    setCurrentPlayer1CardValue("");
+    setPlayer2Card(cleanValues.player2Card ?? []);
+    setCurrentPlayer2CardValue("");
     setErrors({});
   };
   const [gameRecord, setGameRecord] = React.useState(gameModelProp);
@@ -253,6 +265,12 @@ export default function GameUpdateForm(props) {
   const [currentPlayer3ScoreValue, setCurrentPlayer3ScoreValue] =
     React.useState("");
   const player3ScoreRef = React.createRef();
+  const [currentPlayer1CardValue, setCurrentPlayer1CardValue] =
+    React.useState("");
+  const player1CardRef = React.createRef();
+  const [currentPlayer2CardValue, setCurrentPlayer2CardValue] =
+    React.useState("");
+  const player2CardRef = React.createRef();
   const validations = {
     player1: [],
     player2: [],
@@ -264,6 +282,8 @@ export default function GameUpdateForm(props) {
     player3Score: [],
     complete: [],
     leader: [],
+    player1Card: [],
+    player2Card: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -301,6 +321,8 @@ export default function GameUpdateForm(props) {
           player3Score,
           complete,
           leader,
+          player1Card,
+          player2Card,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -366,6 +388,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.player1 ?? value;
@@ -399,6 +423,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.player2 ?? value;
@@ -432,6 +458,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.player3 ?? value;
@@ -465,6 +493,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.player4 ?? value;
@@ -499,6 +529,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.date ?? value;
@@ -536,6 +568,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.player1Score ?? value;
@@ -573,6 +607,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.player2Score ?? value;
@@ -602,6 +638,8 @@ export default function GameUpdateForm(props) {
               player3Score: values,
               complete,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             values = result?.player3Score ?? values;
@@ -663,6 +701,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete: value,
               leader,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.complete ?? value;
@@ -696,6 +736,8 @@ export default function GameUpdateForm(props) {
               player3Score,
               complete,
               leader: value,
+              player1Card,
+              player2Card,
             };
             const result = onChange(modelFields);
             value = result?.leader ?? value;
@@ -710,6 +752,124 @@ export default function GameUpdateForm(props) {
         hasError={errors.leader?.hasError}
         {...getOverrideProps(overrides, "leader")}
       ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              player1,
+              player2,
+              player3,
+              player4,
+              date,
+              player1Score,
+              player2Score,
+              player3Score,
+              complete,
+              leader,
+              player1Card: values,
+              player2Card,
+            };
+            const result = onChange(modelFields);
+            values = result?.player1Card ?? values;
+          }
+          setPlayer1Card(values);
+          setCurrentPlayer1CardValue("");
+        }}
+        currentFieldValue={currentPlayer1CardValue}
+        label={"Player1 card"}
+        items={player1Card}
+        hasError={errors?.player1Card?.hasError}
+        errorMessage={errors?.player1Card?.errorMessage}
+        setFieldValue={setCurrentPlayer1CardValue}
+        inputFieldRef={player1CardRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Player1 card"
+          isRequired={false}
+          isReadOnly={false}
+          type="number"
+          step="any"
+          value={currentPlayer1CardValue}
+          onChange={(e) => {
+            let value = isNaN(parseInt(e.target.value))
+              ? e.target.value
+              : parseInt(e.target.value);
+            if (errors.player1Card?.hasError) {
+              runValidationTasks("player1Card", value);
+            }
+            setCurrentPlayer1CardValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("player1Card", currentPlayer1CardValue)
+          }
+          errorMessage={errors.player1Card?.errorMessage}
+          hasError={errors.player1Card?.hasError}
+          ref={player1CardRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "player1Card")}
+        ></TextField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              player1,
+              player2,
+              player3,
+              player4,
+              date,
+              player1Score,
+              player2Score,
+              player3Score,
+              complete,
+              leader,
+              player1Card,
+              player2Card: values,
+            };
+            const result = onChange(modelFields);
+            values = result?.player2Card ?? values;
+          }
+          setPlayer2Card(values);
+          setCurrentPlayer2CardValue("");
+        }}
+        currentFieldValue={currentPlayer2CardValue}
+        label={"Player2 card"}
+        items={player2Card}
+        hasError={errors?.player2Card?.hasError}
+        errorMessage={errors?.player2Card?.errorMessage}
+        setFieldValue={setCurrentPlayer2CardValue}
+        inputFieldRef={player2CardRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Player2 card"
+          isRequired={false}
+          isReadOnly={false}
+          type="number"
+          step="any"
+          value={currentPlayer2CardValue}
+          onChange={(e) => {
+            let value = isNaN(parseInt(e.target.value))
+              ? e.target.value
+              : parseInt(e.target.value);
+            if (errors.player2Card?.hasError) {
+              runValidationTasks("player2Card", value);
+            }
+            setCurrentPlayer2CardValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("player2Card", currentPlayer2CardValue)
+          }
+          errorMessage={errors.player2Card?.errorMessage}
+          hasError={errors.player2Card?.hasError}
+          ref={player2CardRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "player2Card")}
+        ></TextField>
+      </ArrayField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

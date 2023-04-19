@@ -74,6 +74,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "player1Card": {
+                    "name": "player1Card",
+                    "isArray": true,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "player2Card": {
+                    "name": "player2Card",
+                    "isArray": true,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "PlayGames": {
                     "name": "PlayGames",
                     "isArray": true,

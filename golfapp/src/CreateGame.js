@@ -20,8 +20,8 @@ export default function CreateGame({ user }) {
     const [showAlert, setAlert] = useState(false);
     const [users, setUsers] = useState([]);
 
-    const [player1, setPlayer1] = useState(" ")
-    const [player2, setPlayer2] = useState(" ")
+    const [player1, setPlayer1] = useState("")
+    const [player2, setPlayer2] = useState("")
 
     /**
      * Handle submission of the "create game" form.

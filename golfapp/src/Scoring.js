@@ -46,6 +46,19 @@ export default function Scoring({ user }) {
         p2Score[hole-1] = p2;
         setPlayer2Score(p2Score);
 
+        const updatedGame = {
+            id: id,
+            player1Card: p1Score,
+            player2Card: p2Score,
+        };
+        console.log(updatedGame);
+        const apiData = await API.graphql({
+            query: updateGame,
+            variables: { input: updatedGame },
+        });
+        console.log(apiData);
+        await setGame(apiData.data.updateGame);
+
         if (p1 < p2) {
             const p1Wins = player1wins + 1;
             setPlayer1Wins(p1Wins);
@@ -118,14 +131,14 @@ export default function Scoring({ user }) {
                         <tbody>
                         <tr>
                             <td>{game?.player1}</td>
-                            {player1score.map((score) =>
+                            {game?.player1Card?.map((score) =>
                                 <th>{score !== 0 ? score : ""}</th>
                             )}
                             <th>{player1wins}</th>
                         </tr>
                         <tr>
                             <td>{game?.player2}</td>
-                            {player2score.map((score) =>
+                            {game?.player2Card?.map((score) =>
                                 <th>{score !== 0 ? score : ""}</th>
                             )}
                             <th>{player2wins}</th>

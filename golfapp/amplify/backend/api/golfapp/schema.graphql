@@ -11,6 +11,8 @@ type Game @model @auth(rules: [{allow: public}]) {
   complete: Boolean
   PlayGames: [Player] @manyToMany(relationName: "GamePlayer")
   leader: String
+  player1Card: [Int]
+  player2Card: [Int]
 }
 
 type Player @model @auth(rules: [{allow: public}]) {
@@ -19,4 +21,5 @@ type Player @model @auth(rules: [{allow: public}]) {
   homeCourse: String
   games: [Game] @manyToMany(relationName: "GamePlayer")
   name: String
-} 
+}
+ 

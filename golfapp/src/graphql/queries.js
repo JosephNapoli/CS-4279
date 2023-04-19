@@ -18,6 +18,8 @@ export const getGame = /* GraphQL */ `
         nextToken
       }
       leader
+      player1Card
+      player2Card
       createdAt
       updatedAt
     }
@@ -42,6 +44,8 @@ export const listGames = /* GraphQL */ `
         player3Score
         complete
         leader
+        player1Card
+        player2Card
         createdAt
         updatedAt
       }
@@ -101,6 +105,8 @@ export const getGamePlayer = /* GraphQL */ `
         player3Score
         complete
         leader
+        player1Card
+        player2Card
         createdAt
         updatedAt
       }
