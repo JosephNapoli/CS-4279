@@ -142,6 +142,7 @@ export default function Scoring({ user }) {
                         className="m-1"
                         variant="outline-primary"
                         onClick={openHoleModal}
+                        disabled={game?.complete}
                     >
                         Score Hole
                     </Button>
@@ -150,6 +151,7 @@ export default function Scoring({ user }) {
                         className="m-1"
                         variant="outline-success"
                         onClick={openCompleteModal}
+                        disabled={game?.complete}
                     >
                         Mark Match as Completed
                     </Button>
