@@ -2,7 +2,12 @@
     background-image: url("/public/profile.jpeg");
 }
 .userIn {
-    align-content: space-around;
+    border: 2px solid green;
+    border-radius: 6px;
+}
+.label {
+    font-weight: bold;
+    display: block;
 }
 .profile-picture{
     margin-top: 20px;

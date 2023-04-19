@@ -217,15 +217,15 @@ const EditModal = ({show, onHide, onSubmit, currName, currEmail, currCourse}) =>
             <Modal.Body>
                 <Form>
                     <Form.Group>
-                        <Form.Label>Name </Form.Label>
+                        <Form.Label className="label">Name: </Form.Label>
                         <input className="userIn" type="text" defaultValue={currName} onChange={(e) => setName(e.target.value)}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Email </Form.Label>
+                        <Form.Label className="label">Email: </Form.Label>
                         <input className="userIn"   type = "text" defaultValue={currEmail} onChange={(e) => setEmail(e.target.value)}/>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                       <Form.Label>Home Course </Form.Label>
+                       <Form.Label className="label">Home Course: </Form.Label>
                         <input className="userIn"   type = "text" defaultValue={currCourse} onChange={(e) => setCourse(e.target.value)}/>
                     </Form.Group>
                 </Form>
